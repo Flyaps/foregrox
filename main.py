@@ -3,15 +3,14 @@ import argparse
 
 from extractor import (
     read_image, save, show_image,
-    replace_background_grabcut,
-    replace_background_edge,
+    ExtractorGrabcut, ExtractorEdges,
 )
 
 
 def main():
     use_alt_model = {
-        True: replace_background_edge,
-        False: replace_background_grabcut,
+        True: ExtractorEdges,
+        False: ExtractorGrabcut,
     }
 
     parser = argparse.ArgumentParser(description='Foreground extraction.')
@@ -33,9 +32,8 @@ def main():
     _, image_name = os.path.split(image_path)
 
     image = read_image(image_path)
-
-    model = use_alt_model[is_alt]
-    image = model(image)
+    model = use_alt_model[is_alt]()
+    image = model.extract(image)
 
     if output_path is not None:
         save(image, image_name, output_path)
