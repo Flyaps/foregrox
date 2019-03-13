@@ -26,7 +26,12 @@ python main.py --input='images/input/photo_2019-02-12_15-54-31.jpg'\
                --show=True\
                --alt=True
 ```
-
+If you want to additionally check, if image already has white background:
+```bash
+python main.py --input='images/input/photo_2019-02-12_15-54-31.jpg'\ 
+               --show=True\
+               --bg=True
+```
 
 ## Results
 ![Before](images/input/photo_2019-02-12_15-54-31.jpg) ![After](images/output/photo_2019-02-12_15-54-31_fg.jpg)
