@@ -9,7 +9,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
    long_description = f.read()
 
 setup(
-   name='foreground-extraction',
+   name='foreground_extraction',
    version=lib.__version__,
    description='Foreground extraction.',
    long_description=long_description,
