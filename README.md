@@ -15,20 +15,20 @@ sudo apt-get install python3.7-tk
 
 ## Example
 ```bash
-python main.py -h
-python main.py --input='images/input/photo_2019-02-12_15-54-31.jpg'\
+python -m foregrox -h
+python -m foregrox --input='images/input/photo_2019-02-12_15-54-31.jpg'\
                --output='images/output'\ 
                --show=True
 ```
 If you got insufficient results with the main model, you can try the alternative one:
 ```bash
-python main.py --input='images/input/photo_2019-02-12_15-54-31.jpg'\ 
+python -m foregrox --input='images/input/photo_2019-02-12_15-54-31.jpg'\ 
                --show=True\
                --alt=True
 ```
 If you want to additionally check, if image already has white background:
 ```bash
-python main.py --input='images/input/photo_2019-02-12_15-54-31.jpg'\ 
+python -m foregrox --input='images/input/photo_2019-02-12_15-54-31.jpg'\ 
                --show=True\
                --bg=True
 ```

@@ -46,7 +46,8 @@ class BackgroundClassifier(object):
     N_CLUSTERS = 3
 
     def __init__(self):
-        self.model = load_model(os.path.join(os.path.dirname(__file__), 'rf_background.sav'))
+        self.model = load_model(os.path.join(os.path.dirname(__file__),
+                                             'rf_background.sav'))
 
     @staticmethod
     def cluster_image(image, n_clusters=3):

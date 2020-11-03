@@ -1,9 +1,9 @@
-import os
 import argparse
+import os
 
-from lib.extractor import ExtractorGrabcut, ExtractorEdges
-from lib.classifier import BackgroundClassifier
-from lib.utils import read_image, save, show_image
+from foregrox.classifier import BackgroundClassifier
+from foregrox.extractor import ExtractorEdges, ExtractorGrabcut
+from foregrox.utils import read_image, save, show_image
 
 
 def main():
