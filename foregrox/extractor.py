@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-from .utils import change_contrast
+from foregrox.utils import change_contrast
 
 
 class ExtractorGrabcut(object):
