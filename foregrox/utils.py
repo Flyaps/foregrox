@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 
 def change_contrast(image):
     lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
-    l, a, b = cv2.split(lab)
+    l_coord, a_coord, b_coord = cv2.split(lab)
     clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(2, 2))
-    cl = clahe.apply(l)
+    clahe = clahe.apply(l_coord)
 
-    limg = cv2.merge((cl, a, b))
+    limg = cv2.merge((clahe, a_coord, b_coord))
     final = cv2.cvtColor(limg, cv2.COLOR_LAB2BGR)
     return final
 

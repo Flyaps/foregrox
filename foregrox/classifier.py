@@ -22,16 +22,16 @@ def centroid_histogram(clt):
 
 
 def plot_colors(hist, centroids):
-    bar = np.zeros((50, 300, 3), dtype='uint8')
-    startX = 0
+    bar_img = np.zeros((50, 300, 3), dtype='uint8')
+    start_x = 0
 
     for (percent, color) in zip(hist, centroids):
-        endX = startX + (percent * 300)
-        cv2.rectangle(bar, (int(startX), 0), (int(endX), 50),
+        end_x = start_x + (percent * 300)
+        cv2.rectangle(bar_img, (int(start_x), 0), (int(end_x), 50),
                       color.astype('uint8').tolist(), -1)
-        startX = endX
+        start_x = end_x
 
-    return bar
+    return bar_img
 
 
 def transform(hist, centroid):
@@ -41,7 +41,7 @@ def transform(hist, centroid):
     return row
 
 
-class BackgroundClassifier(object):
+class BackgroundClassifier:
 
     N_CLUSTERS = 3
 
@@ -56,7 +56,7 @@ class BackgroundClassifier(object):
         clt = MiniBatchKMeans(n_clusters=n_clusters)
         clt.fit(image)
 
-        predicate = list(map(lambda x: np.average(x), clt.cluster_centers_))
+        predicate = list(map(np.average, clt.cluster_centers_))
         order = np.argsort(predicate)
 
         hist = centroid_histogram(clt)
@@ -71,20 +71,20 @@ class BackgroundClassifier(object):
         return data
 
     def predict(self, image):
-        '''
+        """
         Returns 0 or 1:
             0 - image has non-white background.
             1 - image has white background.
-        '''
+        """
 
         data = self._preload_data(image)
         prediction = self.model.predict(data)
         return prediction
 
     def predict_proba(self, image):
-        '''
+        """
         Returns probability that image has white background.
-        '''
+        """
 
         data = self._preload_data(image)
         proba = self.model.predict_proba(data)[0][1]

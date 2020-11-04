@@ -1,0 +1,20 @@
+image: python:3.7
+
+before_script:
+  - python --version
+  - pip install -r requirements-dev.txt
+  - export PYTHONPATH="$PYTHONPATH:."
+
+stages:
+  - analysis
+  - tests
+
+pylint:
+  stage: analysis
+  allow_failure: true
+  script:
+    - pylint foregrox tests
+
+pytest:
+  stage: tests
+  script: pytest
