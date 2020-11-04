@@ -4,16 +4,16 @@ import numpy as np
 from foregrox.utils import change_contrast
 
 
-class ExtractorGrabcut(object):
+class ExtractorGrabcut:
 
     @staticmethod
     def calculate_mask(image):
         mask_init = np.zeros(image.shape[:2], np.uint8)
-        backgroundModel = np.zeros((1, 65), np.float64)
-        foregroundModel = np.zeros((1, 65), np.float64)
+        bg_model = np.zeros((1, 65), np.float64)
+        fg_model = np.zeros((1, 65), np.float64)
         rectangle = (5, 5, image.shape[1] - 5, image.shape[0] - 5)
         cv2.grabCut(image, mask_init, rectangle,
-                    backgroundModel, foregroundModel,
+                    bg_model, fg_model,
                     6, cv2.GC_INIT_WITH_RECT)
         mask = np.where((mask_init == 2) | (mask_init == 0), 0, 1).astype('uint8')
         mask = np.logical_not(mask)
@@ -25,20 +25,22 @@ class ExtractorGrabcut(object):
         return image
 
 
-class ExtractorEdges(object):
+class ExtractorEdges:
 
     @staticmethod
     def detect_edge(channel):
-        scharrX = cv2.Scharr(channel, cv2.CV_16S, 1, 0)
-        scharrY = cv2.Scharr(channel, cv2.CV_16S, 0, 1)
-        scharr = np.hypot(scharrX, scharrY)
+        scharr_x = cv2.Scharr(channel, cv2.CV_16S, 1, 0)
+        scharr_y = cv2.Scharr(channel, cv2.CV_16S, 0, 1)
+        scharr = np.hypot(scharr_x, scharr_y)
 
         scharr[scharr > 255] = 255
         return scharr
 
     @staticmethod
     def find_significant_contours(edge_img):
-        image, contours, hierarchy = cv2.findContours(edge_img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        _, contours, hierarchy = cv2.findContours(
+            edge_img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE
+        )
 
         level1 = []
         for i, tupl in enumerate(hierarchy[0]):
